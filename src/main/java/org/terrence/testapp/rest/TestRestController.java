@@ -9,9 +9,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
-import com.ibm.watson.developer_cloud.text_to_speech.v1.model.SynthesizeOptions;
-import com.ibm.watson.developer_cloud.text_to_speech.v1.util.WaveUtils;
+import com.ibm.watson.text_to_speech.v1.TextToSpeech;
+import com.ibm.watson.text_to_speech.v1.model.SynthesizeOptions;
+import com.ibm.watson.text_to_speech.v1.util.WaveUtils;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class TestRestController {
       pw.println("Beginning test...");
       SynthesizeOptions synthesizeOptions = new SynthesizeOptions.Builder().text("One two one two this is just a test")
           .accept("audio/wav").voice("en-US_AllisonVoice").build();
-      InputStream inputStream = textToSpeech.synthesize(synthesizeOptions).execute();
+      InputStream inputStream = textToSpeech.synthesize(synthesizeOptions).execute().getResult();
       pw.println("Text translated");
       InputStream in = WaveUtils.reWriteWaveHeader(inputStream);
       OutputStream out = new FileOutputStream("/tmp/test.wav");
